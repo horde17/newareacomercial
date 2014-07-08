@@ -1,0 +1,400 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Separacion_bambu {
+
+    function __construct() {
+        
+    }
+
+    public function crear_bambu_pdf($cliente, $cedula, $precio_parqueadero, $parqueadero, $apartamento, $apto_precio, $pago_cuotas_iniciales, $numeroletra,$med_apto,$direccion,$barrio,$expedicion) {
+        $pagina1 = '<br><br><br><br><br><br><div style="text-align:center;"> <strong>' . "CONTRATO DE OPCIÓN DE VENTA DEL APTO " . $apartamento . "</strong></div>";
+        $numeroletras = $numeroletra;
+        $today = date("Y-m-d");
+        $pagina1 .= '<div style="text-align:justify;font-family:arial,font-size:12px;">'
+                . "<strong>CONTRATO DE OPCION PARA LA VENTA DE INMUEBLE URBANO: "
+                . "PRIMERA:</strong> Son partes en este contrato: De un lado, "
+                . "<strong>JAIRO YOHANNY POSADA TRUJILLO</strong>, mayor y vecino "
+                . "de Manizales, identificado con la cédula de "
+                . "ciudadanía número 10.285.502 de Manizales, "
+                . "quien obra en nombre y representación del "
+                . "consorcio denominado <strong> CONSORCIO J5 INGENIERIA "
+                . "Y ARQUITECTURA</strong>, Nit 900.560.424-6, con domicilio "
+                . "principal en la ciudad de Manizales, legalmente "
+                . "constituida mediante documento privado, en su calidad "
+                . "de Apoderado y representante legal, como lo demuestra "
+                . "con la copia del acuerdo consorcial, quien para todos "
+                . "los efectos de este contrato se denominará, <strong>LA OPCIONANTE</strong>; "
+                . "y de la otra parte el (la)  (las) (los) "
+                . "señor(a)(as)(es)".'<strong  style="text-transform: uppercase;" >'.$cliente."</strong>, "
+                . "mayor(es) de edad vecino(a)(s) de Manizales, "
+                . "identificado(a)(as)(os) con la(s) cédula(s) "
+                . "de ciudadanía número(s)" . $cedula . ", expedida(s) en Manizales, "
+                . "quienes en la celebración de este contrato obra(n) en "
+                . "nombre propio, y para los fines del mismo se nominará "
+                . "<strong>EL(LA) (LOS) DESTINATARIO(S) U OPICIONADO(S)</strong>. Entre las "
+                . "partes identificadas se ha celebrado el contrato contenido "
+                . "en las siguientes cláusulas. <strong>SEGUNDA: DENOMINACIÓN DE LAS "
+                . "PARTES:</strong> Para todos los fines de este contrato, la parte "
+                . "conformada por <strong>CONSORCIO J5 INGENIERIA Y ARQUITECTURA</strong>, se "
+                . "denominará <strong>OPCIONANTE</strong>; y la parte conformada por el (los) "
+                . "(las) (la) señor (a) (es) <strong style='text-transform: uppercase;'>$cliente,  "
+                . " EL DESTINATARIO U OPCIONADO. TERCERA: OBJETO </strong>. Declaran las "
+                . "partes que es su voluntad celebrar por medio del presente "
+                . "documento, un contrato que han denominado <strong>CONTRATO DE OPCION "
+                . "PARA LA VENTA DE UN INMUEBLE URBANO</strong>, contrato en virtud del "
+                . "cual el <strong>OPCIONANTE</strong> contrae frente al <strong>OPCIONADO</strong> (quien a su "
+                . "vez asume la obligación recíproca de suscribir en su oportunidad "
+                . "el correspondiente contrato de promesa de compraventa o escritura "
+                . "pública de venta), el compromiso de transferirle a título de "
+                . "compraventa, el derecho de dominio y la posesión real y material "
+                . "vinculados a un inmueble que es una unidad de propiedad exclusiva "
+                . "o particular, que hará parte del edificio <strong>BAMBU</strong>, que el <strong>OPCIONANTE</strong> "
+                . "proyecta construir en la ciudad de Manizales en ubicado en Av. "
+                . "Alberto Mendoza Hoyos  # 87- 62 el sector de San Marcel , con "
+                . "una cabida aproximada de 3.593,72 metros cuadrados metros cuadrados. "
+                . "El inmueble prometido en venta está identificado en los planos con "
+                . "el No. $apartamento con un área aproximada de <strong>$med_apto M2</strong>, más un parqueadero "
+                . "cubierto identificado en los planos con el No.<span style='text-decoration: underline;'>$parqueadero</span> del mismo conjunto, "
+                . "los bienes se venden como cuerpo cierto y se alinderarán una vez se "
+                . "realice el respectivo régimen de propiedad horizontal. Este proyecto "
+                . "se levantará en un lote de terreno identificado con las fichas "
+                . "catastrales en mayor extensión números 1-01-0328-0006-000 y 1-01-0328-0005-000, "
+                . "comprendido dentro de los siguientes linderos: ###: Partiendo del mojón uno (1)  "
+                . "ubicado en el extremo noreste del lote a una distancia de un metro (1m) de la vía  "
+                . "que de Manizales";
+
+        $pagina1.= "<br><br><strong>DESCRIPCION TORRE A</strong><br>"
+                . "En total son 17 pisos distribuidos de la siguiente forma:"
+                . "<ul>"
+                . "<li>15 pisos  con 4 apartamentos cada uno  de 1, 2, 3 alcobas. </li>"
+                . "<li>Pent-house en los pisos 16 y 17 con una mayor área. </li>"
+                . "</ul>"
+                . "<br><strong>DESCRIPCION TORRE B</strong><br>"
+                . "En total son 17 pisos distribuidos de la siguiente forma:"
+                . "<ul>"
+                . "<li>14 pisos: con 4 apartamentos por cada piso de 1,2,3 alcobas.  </li>"
+                . "<li>Pent-house en los pisos 15 y 16 con una mayor área. </li>"
+                . "</ul>"
+                . "El proyecto incluye dos ascensores uno de ellos panorámico, amplias áreas comunes   hall de acceso, portería y  3 sótanos de parqueaderos."
+                . "<br><br><strong>ÁREAS COMUNES</strong><ul>"
+                . "<li>Un área social cubierta- RECINTO BAMBU-  en el piso 17 de la torre B rodeado de terrazas.</li>"
+                . "<li>Juegos infantiles en la plazoleta cerca a la portería.</li>"
+                . "<li>Sauna, turco, gimnasio.</li>"
+                . "<li>Sendero Cardio de 80 metros.</li>"
+                . "<li>Zonas BBQ</li>"
+                . "<li>Planta eléctrica para áreas comunes.</li>"
+                . "<li>Doble shut de basuras para la clasificación de desechos</li>"
+                . "<li>Iluminación LEED abastecidas de paneles solares, para el ahorro de energía en las áreas comunes.</li>"
+                . "<li>Tanque de reserva de aguas lluvias.</li>"
+                . "</ul>"
+                . "Las unidades tendrán la siguiente distribución arquitectónica: De 1,2,3 Alcobas, Vestier, 2 Baños, Sala comedor, patio de ropas. "
+                . "<strong>CUARTA: TITULO DE ADQUISICIÓN DEL INMUEBLE DELIMITADO:</strong>"
+                . "El inmueble que acaba de delimitarse fue adquirido por la sociedad"
+                . "<strong>ASESORIAS, CONSTRUCCIONES, CONSULTORIAS, LOGISTICA Y SERVICIOS S.A.S. “ASCOLSER S.A.S.”</strong>"
+                . ", quien además también conforma el consorcio <strong>OPCIONANTE</strong>, por compra hecha a "
+                . "DIANA MATILDE PRIETO BAQUERO, por medio de la escritura "
+                . "pública número 6327 del 12 de Agosto de 2013 "
+                . "otorgada en la Notaría Segunda de Manizales, "
+                . "en dos lotes de terreno identificados con las matrículas "
+                . "inmobiliarias números 100-122288 y 100-123913, pero a través "
+                . "del mismo instrumento se realizó englobe en un solo predio y se inscribió al "
+                . "folio de matrícula inmobiliaria número 100-202359, que es el que identifica "
+                . "al lote de terreno sobre el cual se construyó el edificio que se somete al "
+                . "régimen de propiedad horizontal, para desarrollar el proyecto constructivo."
+                . "<strong>QUINTA: CONDICIONES PARA EL EJERCICIO DE LA OPCION:</strong>"
+                . "El compromiso contraído por el <strong>OPCIONADO</strong>, frente al <strong>OPCIONANTE</strong>, se "
+                . "regula por las siguientes condiciones y plan de pagos:<br><br>"
+                . '<center><table border="1" width="550px">'
+                . "<tr>"
+                . "<td>VALOR APARTAMENTO No. $apartamento</td>"
+                . "<td> $ " . (string) (number_format($apto_precio, 0, "", ".")) . "</td>"
+                . "</tr>"
+                . "<tr>"
+                . "<td>VALOR PARQUEADERO No. $parqueadero</td>"
+                . "<td> $ " . (string) (number_format($precio_parqueadero, 0, "", ".")) . "</td>"
+                . "</tr>"
+                . "<tr>"
+                . "<td>TOTAL:</td>"
+                . "<td> $ " . (string) number_format((int) $apto_precio + (int) $precio_parqueadero, 0, "", ".") . "</td>"
+                . "</tr>"
+                . "</table></center><br><br>"
+                . "El valor total de opción es de " . "<strong>" . $numeroletras . " M/CTE" . "($" . (string) (number_format($apto_precio+$precio_parqueadero, 0, "", ".")) . ")</strong>"
+                . "que el <strong>OPCIONADO</strong> se compromete a cancelar de la siguiente manera:<br><br><br><br><br><br><br><br><br><br><br><br>"
+                . '<center><table border="1" width="550px">'
+                . "<tr>"
+                . "<td> <strong>Cuotas</strong></td>"
+                . '<td colspan="2">' . " <center><strong>Entrega De Recursos</strong><br> Proyecto BAMBU</center></td>"
+                . "</tr>"
+                . "<tr>"
+                . '<td colspan="3">' . "</td>"
+                . "</tr>"
+                . "<tr>"
+                . "<td></td>"
+                . "<td><center><strong> FECHA DE PAGO</strong></center></td>"
+                . "<td><center><strong> VALOR A PAGAR</strong></center></td>"
+                . "</tr>";
+
+
+        $cuotas_iniciales = json_decode($pago_cuotas_iniciales);
+        $j = 1;
+        $totalaportes = 0;
+        $fecha = new Number2word();
+        foreach ($cuotas_iniciales as $key) {
+            
+            $pagina1.="<tr>";
+            $pagina1.="<td> " . $j . "</td>";
+            if($j==1){
+                    $pagina1.="<td> A LA FIRMA DEL ENCARGO( MAS CINCO DÍAS MÁXIMO PARA CONSIGNAR) " . $fecha->mesALetras($key->fecha) . "</td>";
+     
+            }else{
+                $pagina1.="<td> " . $fecha->mesALetras($key->fecha) . "</td>";
+            }           
+            $pagina1.="<td> " . "$ " . (string) (number_format($key->numeropesos, 0, "", ".")) . "</td>";
+            $pagina1.="</tr>";
+            $j++;
+            $totalaportes+=$key->numeropesos;
+        }
+        $totalaportes2 = (string) (number_format($totalaportes, 0, "", "."));
+        $pagina1.='</table></center><br><br><center><span style="font-size:15px; text-align:center;">VALOR TOTAL DE LOS APORTES (30%) =$'. $totalaportes2.'</span></center><br><br>'
+                . "A) <strong>SURGIMIENTO DE LA OPCION:</strong> El derecho del 
+                    <strong>OPCIONADO</strong> surge al momento de comenzar a efectuar los 
+                    respectivos pagos. Sobre la suma recibida no se reconocerán ni 
+                    pagarán intereses a favor del <strong>OPCIONADO</strong>. La presente opción durará 
+                    desde su surgimiento hasta sesenta (60) días calendario contados 
+                    desde la fecha en que se hayan opcionado una cantidad de unidades de 
+                    vivienda igual, por lo menos, al setenta por ciento (70%) del proyecto 
+                    constructivo en desarrollo. Se entiende que la contabilización del 
+                    término, se inicia con la introducción al correo, por el sistema de 
+                    correo certificado, de la comunicación dirigida al <strong>OPCIONADO</strong>, por el 
+                    <strong>OPCIONANTE</strong>, indicándole que debe iniciar las gestiones necesarias para 
+                    obtener la subrogación del crédito hipotecario que pese sobre el 
+                    inmueble, si se va a hacer cargo de todo o de parte del crédito 
+                    global, o para que proceda a pagar la parte del precio que esté 
+                    debiendo en dicho momento. <strong>B) TERMINACIÓN DE LA OPCION:</strong> La opción 
+                    se entenderá terminada, en los siguientes eventos: 1- Por mutuo 
+                    acuerdo de las partes contratantes; 2- Por el silencio del <strong>OPCIONADO</strong> 
+                    transcurrido el plazo de que trata el literal A de ésta cláusula, caso 
+                    en el cual deberá pagar la cláusula penal pactada; 3- Cuando por 
+                    cualquier circunstancia el proyecto no pudiere ser concluido o 
+                    tuviere que ser suspendido. <strong>C) RESTITUCIÓN DEL DINERO EN EVENTO 
+                    DE NO EJERCITARSE LA OPCION:</strong> Si el <strong>OPCIONADO</strong> no ejercitare 
+                    su derecho o el ejercicio del mismo se hiciere imposible, 
+                    terminada la opción, el <strong>OPCIONANTE</strong> procederá a devolver al 
+                    <strong>OPCIONADO</strong> las sumas recibidas, sin interés y con deducción de la suma pactada a 
+                    título de cláusula penal en caso de incumplimiento
+                    por parte del <strong>OPCIONADO</strong>, devolución que se hará en un término de
+                    quince (15) días, contados a partir del momento del desistimiento. <strong>D)
+                    Aplicación DEL DINERO EN EL EVENTO DE EJERCITARSE LA OPCION:</strong> Ejercitada
+                    por el <strong>OPCIONADO</strong> la opción de acuerdo con el plan de ventas 
+                    propuesto por el <strong>OPCIONANTE</strong>, la suma entregada será aplicada al 
+                    precio de las unidades opcionadas sin reconocimiento de intereses 
+                    sobre las mismas pues el precio de la opción es fijo. <strong>E) 
+                    CUANDO SE ENTIENDE EJERCIDA LA OPCION:</strong> Se entiende ejercida 
+                    la opción en el momento en que el <strong>OPCIONADO</strong> manifiesta al <strong>OPCIONANTE</strong>, 
+                    por escrito entregado personalmente a su representante legal, que 
+                    procederá a la formalización de la compraventa previo trámite, si es 
+                    del caso, de la subrogación proporcional de la obligación hipotecaria 
+                    asumida para la construcción de la Unidad Inmobiliaria. <strong>SEXTA: 
+                    CARACTERÍSTICAS Y ESPECIFICACIONES DE LA UNIDAD DE PROPIEDAD EXCLUSIVA O 
+                    PARTICULAR OPCIONADA EN VENTA:</strong> La unidad de propiedad exclusiva o 
+                    particular referida en esta opción tiene las características que se 
+                    describen en el documento firmado por las partes que se anexa como parte 
+                    integrante de ésta opción y corresponde a las especificaciones técnicas 
+                    de los apartamentos. Los materiales son de primera calidad y la 
+                    construcción se levantará de acuerdo con las especificaciones, cálculos 
+                    estructurales, planos arquitectónicos, eléctricos e hidráulicos aprobados
+                    por las empresas encargadas de dar las licencias y permisos de
+                    construcción. <strong>El OPCIONANTE</strong> no aceptará ninguna solicitud de 
+                    modificación que implique el cambio de la estructura o de la 
+                    arquitectura pero hará, a costo del <strong>OPCIONADO</strong> y previo pago del 
+                    costo adicional, las modificaciones posibles que éste solicite. 
+                    En General la unidad se entregará así: ESPECIFICACIONES TÉCNICAS 
+                    GENERALES DE ACABADOS DE OBRA APARTAMENTOS : ACABADOS PISOS (M2) 
+                    Los pisos de las alcobas serán en madera laminada importada, tráfico 
+                    residencial de 8 mm, los pisos del área social y la cocina serán en 
+                    porcelanato, estampillados con pegante. El piso de los balcones serán 
+                    en tablón o cerámica antideslizante. El guardaescoba del apartamento 
+                    será en mdf de 8 cms de altura. ACABADOS DE BAÑOS El enchape para el 
+                    baño será en cerámica blanca de corona hasta una altura de 2.20 m, 
+                    estampillado a la pared con mezcla de agua y cemento. Se instalará 
+                    cenefa en distribución vertical. El piso de los baños será en cerámica 
+                    o porcelanato. El sanitario será referencia San Giorgio Blanco. El 
+                    lavamanos será blanco de sobreponer sobre mueble en fórmica, con cubierta
+                    en fórmica, incluye mezclador de lavamanos grival monocontrol.El 
+                    mezclador de ducha será monocontrol de grival o similar.Los accesorios 
+                    del baño serán de seis piezas cromo. No se incluyen divisiones de baños 
+                    para las de duchas Las referencias de pisos y enchapes serán las 
+                    entregadas por el constructor. ACABADOS PAREDES Y CIELOS (M2) Las 
+                    paredes serán en concreto para los apartamentos y harán parte del
+                    sistema estructural sismorresistente, estucadas y pintadas con pintura
+                    vinílica blanca. Los cielos serán lisos, masillados y pintados con 
+                    pintura vinílica. No se incluye cornisa de cielos. COCINA INTEGRAL 
+                    El mueble inferior y superior de la cocina será en madecor, instalados 
+                    según espacio disponible en el diseño arquitectónico, el mueble inferior
+                    incluye cajonero de tres puestos. La Cubierta del mueble se ofrece en 
+                    grano de mármol gris o negro san Gabriel, incluye el lavaplatos de 
+                    submontar en acero inoxidable y gritería referencia Malva monocontrol, 
+                    adicional incluye barra americana en vidrio . Los aparatos incluidos son: 
+                    una hornilla en cristal negro, mixta para gas y energía eléctrica 3x1 ref.
+                    HacebASCM-66 , un extractor de olores Haceb CE 60 . El gabinete superior 
+                    incluye platero en rejiplast. PATIO DE ROPAS El lavadero será en Cemento 
+                    de 0.60m de ancho, soportado sobre mueble inferior. se entregarán los puntos 
+                    con llave de agua fría y caliente para lavadora . Los apartamentos de tres 
+                    alcobas y dos alcobas incluyen calentadorHaceb a gas de 10 litros debidamente 
+                    instalados. Se enchapará el perímetro superior del lavadero con dos hiladas de
+                    enchape blanco valencia 20x20. VENTANERIA DEL APARTAMENTO La ventanería será
+                    en aluminio natural ref. 5020, con naves corredizas, vidrio de 3 y 4mm, con
+                    alfajías en aluminio natural, laventanería en celosía ref. s268 y vidrio
+                    grabado miniboreal, enbaños y patios de ropas. INSTALACIONES A GAS Se
+                    entregará la red interna de gas domiciliario, desde el apartamento al
+                    armario de contadores, también la conexión del armario a la red principal.
+                    La red de gas interna se distribuye hasta la estufa mixta y hasta el sitio
+                    de ubicación del calentador y la secadora. No se incluye el medidor de gas
+                    con sus derechos de conexión. INSTALACIONES ELECTRICAS E HIDRAÚLICAS El
+                    apartamento se entregará con los medidores de agua y luz incluidos los
+                    derechos de conexión. Se incluye la red de energía eléctrica y red
+                    telefónica completa. Los aparatos eléctricos serán en línea luminex blanca.
+                    También se incluye los ductos para televisión por cable en las 
+                    alcobas y el salón comedor. No se incluye la red de cableado para 
+                    parabólica y el valor de la inscripción. (Se entrega el cableado de la red principal 
+                    y general de telefonía y parabólica del edificio) No se incluye la línea telefónica. 
+                    Caja de breakersluminex o similar Todas las instalaciones hidrosanitarias serán en PVC . 
+                    Cada apartamento llevará dos llaves de ½ 'RW', para control del agua de cocina y baños. 
+                    PUERTA EXTERIOR La puerta exterior incluye marco y nave en mdf con chapa de seguridad ya ley,
+                    debidamente pintadas de dimensión de 1.0x2.30m. PUERTA INTERIOR La puerta interior es en 
+                    lámina de MDF entamborada, acabada con pintura de fábrica, incluye marco mdf, sin cabezal, 
+                    con pintura y chapa slage de manija, Dimensiones de las puertas: 0.90x2.30m en alcobas 
+                    y 0.70x2.30 en baños. CLOSET Y VESTIER Los apartamentos de dos y tres alcobas se entregarán 
+                    con un closet en madecor, con maletero superior, puertas en madecor, manija recta en acero . 
+                    También se entregará el vestier en madecor que incluye base, dos gabeteros, colgaderos y 
+                    no incluye puertas de vestier. Nota: Los apartamentos tipo 03 de dos alcobas de la Torre B 
+                    se entregarán con dos closet en madecor, debido a que estos no tienen vestier. No se incluyen
+                    otros mueble en madera y electrodomésticos que aparecen en la publicidad del proyecto. 
+                    EXTERIORES Y AREAS COMUNES PINTURA FACHADAS Y CULATAS Las fachadas y culatas incluyen: 
+                    fachadas lisas, revocadas y pintadas con koraza de color blanco,balcones en vidrio 
+                    templadoy fachadas con fachaleta estampillada o similar. La referencia de la fachaleta será 
+                    definida por el constructor. SOTANOS DE PARQUEADEROS Los pisos de parqueadero serán en 
+                    concreto de 3000 psi, las pantallas y columnas antisísmicas serán demarcadas con pintura 
+                    enaceite, al igual que la franja de los parqueaderos.Los cielos de los parqueaderos serán 
+                    en metaldec no incluye pintura del galvanizado, con vigas de concreto y metálicas pintadas 
+                    de color blanco. Las escalas de los parqueaderos serán terminadas en concreto a lavista 
+                    soportada sobre la baranda metálica en tubería de 1” y 1 ½”con pintura aluminio brillante. 
+                    Los pisos de los accesos a parqueaderos serán en cemento afinado. BODEGAS EN LOS PARQUEADEROS
+                    PARA PROPIETARIOS La bodega incluye paredes en ladrillo farol , con pintura en masilla y cal,
+                    puerta en lamina col rol cal 22 con pintura anticorrosiva blanca, incluye un pasador 
+                    metalico con portacandado. No incluye el candado. Incluye plafón para iluminación. 
+                    El piso de la bodega es en concreto pulido. AREAS COMUNES PUERTA DE ACCESO Los pisos de 
+                    áreas comunes serán en cerámica. La puerta de acceso principal al edificio será en vidrio 
+                    templado. Los corredores interiores incluyen antepechos de altura 0.8 m, y pasamanos en 
+                    tubería metálica de 1.5“ pulgadas hasta una altura de 1.40 m. Las escalas de los puntos 
+                    fijos serán terminadas en concreto a la vista, la baranda de escalas será metálica en 
+                    tubería de 1” y 1 ½” con pintura aluminio brillante. DOTACION PARA ADECUACION AMBIENTAL 
+                    DEL PROYECTO Además de los materiales ecológicos y reciclables que harán parte de la 
+                    estructura se implementarán los siguientes tips de más impactoambiental para el proyecto. 
+                    1. DOBLE SHUT PARA SEPARACION DE BASURAS EN CADA PISO DE APTOS. 2. ILUMINACION LEED EN 
+                    AREAS COMUNES DEL PROYECTO, ALIMENTADA POR SISTEMA DE PANELES SOLARES UBICADOS ENCUBIERTA. 
+                    3. CUBIERTAS VERDES EN ZONAS COMUNES . 4. SELLAMIENTO DE FACHADAS PARA EVITAR LA CALEFACCION.
+                    5. CONSTRUCCION DE TANQUE DE RESERVA PARA UTILIZACION DEAGUAS LLUVIAS. <strong>SÉPTIMA: DIRECCIÓN 
+                    DEL OPCIONADO PARA NOTIFICACIONES: Las notificaciones o la correspondencia que deba ser 
+                    dirigida al OPCIONADO</strong> en la ejecución de este contrato, será enviada a la siguiente 
+                    dirección: $direccion Barrio $barrio <strong>TELEFONO:8884702</strong> Si el <strong>OPCIONADO</strong> cambia la 
+                    dirección, deberá notificarlo por escrito al <strong>OPCIONANTE. OCTAVA: GARANTIA DEL PRECIO DE 
+                    LA UNIDAD OPCIONADA:</strong> El valor total de ésta opción es la cantidad ciento ochenta y cinco
+                    millones setecientos sesenta y un mil seiscientos veinte pesos  <strong>M/CTE".  (string) number_format((int) $apto_precio + (int) $precio_parqueadero, 0, "", ".")."</strong>,". 
+                    "precio que se garantiza por el <strong>OPCIONANTE</strong>. Este precio se garantiza siempre y cuando, 
+                    el <strong>OPCIONADO</strong> cumpla con el pago oportuno de las cuotas pactadas en el plan de pagos y 
+                    que al tiempo del ejercicio definitivo de la opción conforme con el aviso a él dado por 
+                    el <strong>OPCIONANTE</strong>, proceda a pagar la parte del precio que esté debiendo o a subrogar, en la 
+                    proporción correspondiente, el crédito hipotecario si es del caso. Y en caso de 
+                    incumplimiento por parte del <strong>OPCIONADO</strong>, el <strong>OPCIONANTE</strong> podrá optar por una de las siguientes 
+                    alternativas: A) Dar por terminado el contrato, devolviendo al <strong>OPCIONADO</strong> las cuotas pagadas,
+                    sin intereses, pero con aplicación a la cláusula penal regulada más adelante; B) Persistir 
+                    en el contrato, si el <strong>OPCIONADO</strong> pone al día las cuotas pendientes, con intereses moratorios
+                    en forma mensual a la tasa máxima permitida por la Ley y en especial la determinada por la
+                    superintendencia financiera; C) Reajustar el precio de las unidades opcionadas de acuerdo
+                    con los precios ofrecidos en ese momento a terceros, con la obligación del <strong>OPCIONADO</strong> de
+                    pagar, en el plazo restante, y en cuotas iguales el mayor valor determinado. <strong>NOVENA: 
+                    GASTOS DE OTORGAMIENTO DE LA ESCRITURA DE VENTA E HIPOTECA:</strong> Los gastos Notariales que
+                    demandan el otorgamiento de la escritura de compraventa de la Unidad de propiedad exclusiva,
+                    serán por cuenta del Opcionante y del Opcionado, por partes iguales. Los gastos de venta 
+                    sean liquidados por concepto de la Oficina de Registro de Instrumentos Públicos y la boleta
+                    de rentas serán por cuenta del Opcionado.<strong> DECIMA: PROYECTO DE NEGOCIO JURÍDICO FORMULADO AL
+                    DESTINATARIO:</strong> De acuerdo con lo regulado en este contrato de opción, el mismo contiene una 
+                    oferta o propuesta de un negocio jurídico que se propone al Destinatario y Aceptante y que 
+                    consiste en la opción concedida a este por el <strong>OPCIONANTE</strong> para la adquisición, en las 
+                    condiciones indicadas y preferentemente, de unas unidades de propiedad exclusiva del conjunto
+                     arquitectónico que el <strong>OPCIONANTE</strong> se compromete a desarrollar, promocionar y llevar a 
+                     término. La aceptación de la oferta por parte del <strong>OPCIONADO</strong>, implica para éste la 
+                     obligación de suscribir en el futuro, el contrato de promesa de compraventa, una vez 
+                     reciba la notificación que le envíe el <strong>OPCIONANTE. DECIMA PRIMERA: INCUMPLIMIENTO POR 
+                     PARTE DEL OPCIONANTE. INCUMPLIMIENTO POR PARTE DEL OPCIONADO:</strong> Si el <strong>OPCIONANTE</strong> incumple 
+                     las obligaciones a su cargo contenidas en este contrato de opción, pagará al <strong>OPCIONADO</strong> y 
+                     a título de cláusula penal, el equivalente al diez por ciento (10%) del valor total de la 
+                     opción estipulado en la cláusula Octava, suma esta que será exigible con la demostración 
+                     del incumplimiento y previo requerimiento y constitución en mora que debe hacerse a el 
+                     <strong>OPCIONANTE</strong>. Si el <strong>OPCIONADO</strong> incumple por su parte, pagará a el <strong>OPCIONANTE</strong> y a título de 
+                     cláusula penal, el equivalente al diez por ciento (10%) del valor total de la opción 
+                     estipulado en la cláusula Octava, suma esta que será exigible ejecutivamente desde la misma
+                     fecha de suscripción de este contrato, sin necesidad de requerimientos o de constitución en
+                     mora, a lo cual renuncia el <strong>OPCIONADO</strong> a favor del <strong>OPCIONANTE</strong>, y con la sola afirmación de
+                     incumplimiento. <strong>PARÁGRAFO PRIMERO:</strong> Expresamente se declara que no habrá lugar a aplicación
+                     de ésta sanción, pues ello no constituye incumplimiento, por el hecho de que el <strong>OPCIONANTE</strong>
+                     no pueda llevar a cabo el proyecto de construcción, como consecuencia de no obtener el 
+                     crédito hipotecario necesario para financiar la construcción del conjunto, o porque no
+                     otorgue un número de opciones suficientes que hagan viable el proyecto constructivo, o 
+                     por circunstancias legales, de fuerza mayor o caso fortuito que impidan culminarlo. 
+                     <strong>PARÁGRAFO SEGUNDO:</strong> Se considera que el proyecto constructivo no es viable cuando en el 
+                     término de doce (12) meses contados a partir de la fecha de suscripción de éste contrato, 
+                     el <strong>OPCIONANTE</strong> no ha podido colocar opciones que sean iguales o superen el setenta  por 
+                     ciento (70%) del total de unidades proyectadas para todo el Edificio, según se refiere en 
+                     éste documento. <strong>PARÁGRAFO TERCERO:</strong> No se considera tampoco incumplimiento el retraso en 
+                     la entrega de las obras proyectadas, siempre y cuando el mismo tenga origen en 
+                     circunstancias de fuerza mayor o caso fortuito no imputables a el <strong>OPCIONANTE</strong>, tales como 
+                     huelga de trabajadores de la construcción, la huelga de trabajadores de otras empresas que 
+                     impidan el suministro oportuno de materiales requeridos para la construcción, los hechos 
+                     irresistibles de la naturaleza, la orden de autoridad competente y otros similares. 
+                     <strong>PARÁGRAFO CUARTO:</strong> La aplicación de la cláusula penal no impide a la parte que haya cumplido
+                     demandar la resolución del contrato o su cumplimiento. En uno u otro caso, se tendrán en 
+                     cuenta las reglas consignadas en este contrato. <strong>PARÁGRAFO QUINTO:</strong> La entrega de las 
+                     unidades prometidas en venta se hará en dieciséis (16) meses  contados a partir de la 
+                     fecha en que se le comunique por correo certificado a cada uno de los <strong>OPCIONADOS</strong> que el 
+                     <strong>OPCIONANTE</strong> ha colocado opciones equivalentes o superiores al setenta por ciento (70%) de 
+                     las unidades disponibles para la venta. <strong>DECIMA SEGUNDA: CESION DE LA OPCION:</strong> El presente 
+                     contrato de <strong>OPCION</strong> podrá ser cedido por el <strong>OPCIONADO</strong> siempre y cuando notifique 
+                     oportunamente al <strong>OPCIONANTE</strong> de la cesión y este a su vez le manifieste por escrito que 
+                     lo puede hacer. <strong>DECIMO TERCERA: LUGAR DEL CUMPLIMIENTO DEL CONTRATO:</strong> Para todos los 
+                     efectos legales, se señala como lugar del cumplimiento de este contrato, la ciudad de 
+                     Manizales, Departamento de caldas. <strong>DECIMA CUARTA: CLAUSULA COMPROMISORIA:</strong> Toda controversia
+                     o diferencia relativa a este contrato, a su ejecución o liquidación, se resolverá por un 
+                     Tribunal de Arbitramento de acuerdo a las normas que establezca la Cámara de Comercio de 
+                     Manizales, por el Centro de Arbitraje, Conciliación y Amigable Composición de la Cámara de
+                     comercio de Manizales. El Tribunal se sujetará en su funcionamiento a las disposiciones 
+                     legales, al reglamento adoptado por el Centro mencionado, funcionará allí y lo Árbitros 
+                     resolverán las diferencias en derecho. Para constancia se firma en la ciudad de Manizales, 
+                     en dos ejemplares del mismo tenor, uno para cada parte, al ".$fecha->fecha_dia_mes_año($today);     
+        $pagina1.= "<br><br><br><br><br>";
+        $pagina1.= '<center><table width="550px">'
+                . "<tr>"
+                . "<td><strong>EL (LOS) OPCIONADO(S)</strong></td>"
+                . "<td><strong>LA OPCIONANTE</strong></td>"
+                . "</tr>"
+                . "<tr>"
+                . "<td><strong>".strtoupper($cliente)."</strong></td>"
+                . "<td><strong>JAIRO YOHANNY POSADA TRUJILLO</strong></td>"
+                . "</tr>"
+                . "<tr>"
+                . "<td>CC. $cedula de $expedicion</td>"
+                . "<td>Representante legal</td>"
+                . "</tr>"                
+                . "</table></center>"
+                
+                . "</div>";                                                     
+        return $pagina1;
+    }
+
+}
+?>
+

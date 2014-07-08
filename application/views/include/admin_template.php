@@ -1,0 +1,9 @@
+<?php
+$this->load->view("include/administrador/1_head");
+$this->load->view("include/administrador/2_customizer");
+$this->load->view("include/administrador/3_header");
+$this->load->view("include/administrador/4_navigation");
+$this->load->view($main);
+$this->load->view("include/administrador/7_final_content");
+$this->load->view("include/administrador/8_footer");
+?>

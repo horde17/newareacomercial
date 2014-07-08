@@ -1,0 +1,9 @@
+<?php
+$this->load->view("include/clientes/1_head");
+$this->load->view("include/clientes/2_customizer");
+$this->load->view("include/clientes/3_header");
+$this->load->view("include/clientes/4_navigation");
+$this->load->view($main);
+$this->load->view("include/clientes/7_final_content");
+$this->load->view("include/clientes/8_footer");
+?>
