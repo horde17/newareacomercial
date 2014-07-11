@@ -1639,11 +1639,10 @@ EOD;
             $año_mes = date("Y-m");
             $sesiondata = $this->session->userdata('logged_in');
             $data = array(
-                "main" => 'clientes/nuevos_contactos_view',
+                "main" => 'clientes/nuevos_contactos_excel_view',
                 "titulo" => 'Nuevos contactos',
                 "persona" => $this->admin_model->get_user($sesiondata['username']),
-                "clientes" => $this->cliente_model->get_clientes(),
-                "proyectos" => $this->cliente_model->get_proyectos_activos(),
+                
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
                 "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "lugar" => 'Nuevos contactos',
@@ -1656,6 +1655,29 @@ EOD;
             redirect('sesion', 'refresh');
         }
     }
+    
+    public function nuevo_contacto() {
+        if ($this->session->userdata('logged_in')) {
+            $año_mes = date("Y-m");
+            $sesiondata = $this->session->userdata('logged_in');
+            $data = array(
+                "main" => 'clientes/nuevos_contactos_view',
+                "titulo" => 'Nuevos contactos',
+                "persona" => $this->admin_model->get_user($sesiondata['username']),             
+                "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
+                "lugar" => 'Nuevos contactos',
+                "titulo_page" => "Nuevos contactos",
+                "subtitulo_page" => "Nuevos contactos",
+                "box_title" => "Nuevo contacto"
+            );
+            $this->load->view('include/cliente_template', $data);
+        } else {
+            redirect('sesion', 'refresh');
+        }
+    }
+    
+    
 
     public function read_excel_contactos() {
         $direccionima = "./uploads/";

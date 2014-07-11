@@ -49,6 +49,19 @@
                         <li><a class="" href="<?php echo base_url()?>asesor/nuevo_clientes_excel/"><span class="sub-menu-text">Clientes desde Excel</span></a></li>
                     </ul>
                 </li>
+                
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-table fa-fw"></i> <span class="menu-text">Contactos</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a class="" href="<?php echo base_url()?>cliente/nuevo_contacto"><span class="sub-menu-text">Nuevos contactos</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>cliente/subir_contacto"><span class="sub-menu-text">Nuevos  excel</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>cliente/contactos/"><span class="sub-menu-text">Contactos</span></a></li>
+                        
+                    </ul>
+                </li>
                 <li class="has-sub">
                     <a href="javascript:;" class="">
                         <i class="fa fa-briefcase fa-fw fa-fw"></i> <span class="menu-text">Proceso de Ventas</span>

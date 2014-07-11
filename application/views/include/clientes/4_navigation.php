@@ -67,7 +67,8 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="<?php echo base_url()?>cliente/subir_contacto"><span class="sub-menu-text">Nuevos contactos</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>cliente/nuevo_contacto"><span class="sub-menu-text">Nuevos contactos</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>cliente/subir_contacto"><span class="sub-menu-text">Nuevos  excel</span></a></li>
                         <li><a class="" href="<?php echo base_url()?>cliente/contactos/"><span class="sub-menu-text">Contactos</span></a></li>
                         
                     </ul>
