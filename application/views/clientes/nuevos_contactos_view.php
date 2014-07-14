@@ -1,44 +1,39 @@
-
+<script src="<?php echo base_url() ?>js/jquerypriceformat.js" type="text/javascript"></script>
+<script src="<?php echo base_url() ?>js/jquerypriceformat.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     function controlformularios() {
-        if ($('#nombre').val() == '') {
-            $("#labelnombre").append("Se te ha olvidado algo?");
-            $('#nombre').focus();
-            return false;
+        
+        if($("#proyectos").val()==0){
+            
         }
-        if ($('#telefonocel').val() == '') {
-            $("#labeltelefonocel").append("Se te ha olvidado algo?");
-            $('#telefonocel').focus();
-            return false;
-        }
-        if ($('#correo').val() == '') {
-            $("#labelcorreo").append("Se te ha olvidado algo?");
-            $('#correo').focus();
-            return false;
-        }
-        if ($('#presupuesto').val() == '') {
-            $("#labelpresupuesto").append("Se te ha olvidado algo?");
-            $('#presupuesto').focus();
-            return false;
-        }
-        if ($('#direccion').val() == '') {
-            $("#labeldireccion").append("Se te ha olvidado algo?");
-            $('#direccion').focus();
-            return false;
-        }
-        if ($('#telefono').val() == '') {
-            $("#labeltelefono").append("Se te ha olvidado algo?");
-            $('#telefono').focus();
-            return false;
-        }
-
-        if ($('#file_browse').val() == '') {
-            $("#labelfile_browse").append("Se te ha olvidado algo?");
-            return false;
-        }
+        
 
     }
+    
+    $(document).ready(function(){ 
+$("#telefijo, #telefonocel").keydown(function(event) {
+   if(event.shiftKey)
+   {
+        event.preventDefault();
+   }
+ 
+   if (event.keyCode == 46 || event.keyCode == 8)    {
+   }
+   else {
+        if (event.keyCode < 95) {
+          if (event.keyCode < 48 || event.keyCode > 57) {
+                event.preventDefault();
+          }
+        } 
+        else {
+              if (event.keyCode < 96 || event.keyCode > 105) {
+                  event.preventDefault();
+              }
+        }
+      }
+   });
+});
 
     function eliminarlabel(id) {
         if ($('#' + id).val() != '') {
@@ -103,38 +98,43 @@
                                 <!-- TOP ROW -->
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form id="da-login-form"  enctype="multipart/form-data"  onsubmit="return controlformularios();" method="get" action="<?php echo base_url(); ?>admin/crear_nuevo_asesor/">
+                                        <form id="da-login-form"  enctype="multipart/form-data" onsubmit="return controlformularios();"  method="POST" action="<?php echo base_url()?>cliente/new_form_contacto/">
 
                                             <label class="labelform" for="nombre">Nombre</label>
                                             <br/>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" onblur="eliminarlabel(this.id);" placeholder="nombres"/>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" onblur="eliminarlabel(this.id);" required="" placeholder="Nombre Completo"/>
                                             <label id="labelnombre"></label>
                                             <br/>
                                             
                                             <label class="labelform" for="telefijo">Telefono fijo</label>
                                             <br/>
-                                            <input type="text" class="form-control" name="telefijo" id="telefijo" onblur="eliminarlabel(this.id);"  placeholder="Dirección"/>
+                                            <input type="text" class="form-control" name="telefijo" id="telefijo" onblur="eliminarlabel(this.id);"  placeholder="Telefono Fijo"/>
                                             <label id="labeldireccion"></label>
                                             <br/>
                                             <label class="labelform" for="telefonocel">Celular</label>
                                             <br/>
-                                            <input type="tel" class="form-control" name="telefonocel" id="telefonocel" onblur="eliminarlabel(this.id);" placeholder="Telefono" />
+                                            <input type="text" class="form-control" name="telefonocel" id="telefonocel" onblur="eliminarlabel(this.id);" placeholder="Telefono Celular" required="" />
                                             <label id="labeltelefonocel"></label>  
                                             <br/>
                                             <label class="labelform" for="correo">Correo</label>
                                             <br/>
-                                            <input type="tel" class="form-control" name="correo" id="correo" onblur="eliminarlabel(this.id);" placeholder="Telefono" />
+                                            <input type="email" class="form-control" name="correo" id="correo" onblur="eliminarlabel(this.id);" placeholder="Correo personal" required="" />
                                             <label id="labelcorreo"></label>  
                                             <br/>
                                             <label class="labelform" for="presupuesto">Presupuesto</label>
                                             <br/>
-                                            <input type="tel" class="form-control" name="presupuesto" id="presupuesto" onblur="eliminarlabel(this.id);" placeholder="Telefono" />
+                                            <input type="text" class="form-control" name="presupuesto" value="0" id="presupuesto" onblur="eliminarlabel(this.id);" required="" placeholder="Presupuesto de compra" />
                                             <label id="labelpresupuesto"></label>  
                                             <br/>
                                             <label class="labelform" for="proyecto">Proyecto</label>
                                             <br/>
-                                            <input type="tel" class="form-control" name="proyecto" id="proyecto" onblur="eliminarlabel(this.id);" placeholder="Telefono" />
-                                            <label id="labeltelefono"></label>  
+                                            <select required="" id="proyectos" name="proyectos" class="select2-container col-lg-12">
+                                                <option value="0">-- Seleccionar proyecto --</option>
+                                                <?php foreach ($proyectos as $key){?>
+                                                <option value="<?php echo $key['pro_nombre']?>"><?php echo $key['pro_nombre'];?></option>
+                                                <?php }?>
+                                            </select>
+                                           <br/>
                                             <br/>
                                             <div class="col-sm-offset-10">
                                             
@@ -161,3 +161,15 @@
         </div>
     </div>
 </div>
+
+<script>
+$("#proyectos").select2();
+
+$("#presupuesto").priceFormat({
+            prefix: '',
+            thousandsSeparator: '.',
+            centsSeparator: ',',
+            centsLimit: 0
+        });
+
+</script>

@@ -781,6 +781,59 @@ class Admin extends CI_Controller {
             redirect('sesion', 'refresh');
         }
     }
+    
+    public function pago_mes_actual() {
+        if ($this->session->userdata('logged_in')) {
+            $año_mes = date("Y-m");
+            $sesiondata = $this->session->userdata('logged_in');
+            $data = array(
+                "main" => 'administrador/pagos_mes_actual_view',
+                "titulo" => 'Pagos del mes actual',
+                "persona" => $this->admin_model->get_user($sesiondata['username']),
+                "lugar" => 'Pagos del mes actual',
+                "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes), 
+                "pago_cuota_inicial" => $this->admin_model->pago_mes_ini_actual($año_mes),
+                "pago_cuotas" => $this->admin_model->pago_mes_actual($año_mes),
+                "titulo_page" => "Pagos del mes actual",
+                "subtitulo_page" => "Pagos que deben realizar los clientes",
+                "box_title" => "Datos de las separaciones de inmueble",
+                
+            );
+            $this->load->view('include/admin_template', $data);
+        } else {
+            redirect('sesion', 'refresh');
+        }
+        
+    }
+    
+    public function pago_mes_anterior() {
+        if ($this->session->userdata('logged_in')) {
+            $año_mes = date("Y-m");
+            $año_mes_actual = date("Y-m");
+            $nuevafecha = strtotime('-1 month', strtotime($año_mes_actual));
+            $año_mes_anterior = date("Y-m", $nuevafecha);
+            $sesiondata = $this->session->userdata('logged_in');
+            $data = array(
+                "main" => 'administrador/pagos_mes_anterior_view',
+                "titulo" => 'Pagos del mes actual',
+                "persona" => $this->admin_model->get_user($sesiondata['username']),
+                "lugar" => 'Pagos del mes actual',
+                "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes), 
+                "pago_cuota_inicial" => $this->admin_model->pago_mes_ini_actual($año_mes_anterior),
+                "pago_cuotas" => $this->admin_model->pago_mes_actual($año_mes_anterior),
+                "titulo_page" => "Pagos del mes actual",
+                "subtitulo_page" => "Pagos que deben realizar los clientes",
+                "box_title" => "Datos de las separaciones de inmueble",
+                
+            );
+            $this->load->view('include/admin_template', $data);
+        } else {
+            redirect('sesion', 'refresh');
+        }
+        
+    }
 
 }
 

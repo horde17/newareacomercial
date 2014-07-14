@@ -265,6 +265,30 @@ where lower(proyecto.pro_nombre) like '%$proyecto%'");
     public function insertar_expectativas($datos) {
         $this->db->insert('expectativa_ventas', $datos);
     }
+    
+    public function pago_mes_ini_actual($año_mes){
+        $query = $this->db->query("select cliente.cli_cedula, cliente.cli_nombre, cliente.cli_apellido, 
+            cliente.cli_telefono_cel, cliente.cli_telefono, cliente.cli_email, proyecto.pro_nombre, 
+apartamento.apto_numero,couta_inicial.valor_couta, couta_inicial.fecha_pago_cuota
+from cliente 
+inner join apartamento on apartamento.cli_cedula=cliente.cli_cedula
+inner join proyecto on proyecto.id_proyecto=apartamento.id_proyecto
+inner join couta_inicial on couta_inicial.cli_cedula=cliente.cli_cedula
+where (apartamento.apto_estado_venta=1 and cast(couta_inicial.fecha_pago_cuota as text) like '%2013-10%')");
+        return $query->result_array();
+    }
+    
+    public function pago_mes_actual($param) {
+       $query = $this->db->query("select cliente.cli_cedula, cliente.cli_nombre, cliente.cli_apellido, 
+cliente.cli_telefono_cel, cliente.cli_telefono, cliente.cli_email, proyecto.pro_nombre, 
+apartamento.apto_numero, coutas_pagar.valor_cuota, coutas_pagar.num_couta, coutas_pagar.fecha_pago_cuota
+from cliente 
+inner join apartamento on apartamento.cli_cedula=cliente.cli_cedula
+inner join proyecto on proyecto.id_proyecto=apartamento.id_proyecto
+inner join coutas_pagar on coutas_pagar.cli_cedula=cliente.cli_cedula
+where (apartamento.apto_estado_venta=1 and cast(coutas_pagar.fecha_pago_cuota as text) like '%2013-10%')") ;
+       return $query->result_array();
+    }
 
 
 }

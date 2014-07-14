@@ -68,6 +68,17 @@ if (empty($_SESSION['username'])) {
         <!-- Filestyle -->
          <script src="<?php echo base_url()?>js/filestyle.js" type="text/javascript"></script>
          <!--<script src="<php echo base_url() ?>js/fichatecnica.js" type="text/javascript"></script>-->
+         
+         <!-- DATA TABLES -->
+        
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>js/datatables/media/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>js/datatables/media/assets/css/datatables.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+
+	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/media/assets/js/datatables.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
     </head>
     <body>
 

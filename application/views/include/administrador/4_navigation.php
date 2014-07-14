@@ -77,6 +77,19 @@
                 </li>
                 <li class="has-sub">
                     <a href="javascript:;" class="">
+                        <i class="fa fa-table fa-money"></i> <span class="menu-text">Pagos</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a class="" href="<?php echo base_url()?>admin/pago_mes_actual"><span class="sub-menu-text">Pagos de este mes</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>admin/pago_mes_anterior"><span class="sub-menu-text">Pagos del mes pasado</span></a></li>
+                        <!--<li><a class="" href="<php echo base_url()?>admin/contactos/"><span class="sub-menu-text"></span></a></li>-->
+                        
+                    </ul>
+                </li>
+                
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
                         <i class="fa fa-briefcase fa-fw fa-fw"></i> <span class="menu-text">Proceso de Ventas</span>
                         <span class="arrow"></span>
                     </a>

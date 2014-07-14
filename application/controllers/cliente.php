@@ -1642,7 +1642,7 @@ EOD;
                 "main" => 'clientes/nuevos_contactos_excel_view',
                 "titulo" => 'Nuevos contactos',
                 "persona" => $this->admin_model->get_user($sesiondata['username']),
-                
+                "proyectos" => $this->cliente_model->get_proyectos_activos(),
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
                 "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "lugar" => 'Nuevos contactos',
@@ -1655,7 +1655,7 @@ EOD;
             redirect('sesion', 'refresh');
         }
     }
-    
+
     public function nuevo_contacto() {
         if ($this->session->userdata('logged_in')) {
             $año_mes = date("Y-m");
@@ -1663,7 +1663,8 @@ EOD;
             $data = array(
                 "main" => 'clientes/nuevos_contactos_view',
                 "titulo" => 'Nuevos contactos',
-                "persona" => $this->admin_model->get_user($sesiondata['username']),             
+                "persona" => $this->admin_model->get_user($sesiondata['username']),
+                "proyectos" => $this->cliente_model->get_proyectos_activos(),
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
                 "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "lugar" => 'Nuevos contactos',
@@ -1676,8 +1677,33 @@ EOD;
             redirect('sesion', 'refresh');
         }
     }
-    
-    
+
+    public function new_form_contacto() {
+        if ($this->session->userdata('logged_in')) {
+            $nombre = $this->input->post('nombre');
+            $telfijo = $this->input->post('telefijo');
+            $telefonocel = $this->input->post('telefonocel');
+            $correo = $this->input->post('correo');
+            $presupuesto = $this->input->post('presupuesto');
+            $proyectos = $this->input->post('proyectos');
+//            echo $proyectos;
+            $presupuesto = str_replace(".", "", $presupuesto);
+
+
+            $data = array(
+                "nombre" => $nombre,
+                "telefono_fijo" => $telfijo,
+                "telefono_cel" => $telefonocel,
+                "correo" => $correo,
+                "presupuesto" => (double) $presupuesto,
+                "pro_nombre" => $proyectos
+            );
+            $this->cliente_model->insertar_contactos($data);
+            redirect('cliente/nuevo_contacto/', 'refresh');
+        } else {
+            redirect('sesion', 'refresh');
+        }
+    }
 
     public function read_excel_contactos() {
         $direccionima = "./uploads/";
@@ -1741,7 +1767,7 @@ EOD;
     }
 
     public function contactos() {
-         if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in')) {
             $año_mes = date("Y-m");
             $sesiondata = $this->session->userdata('logged_in');
             $data = array(
@@ -1762,9 +1788,9 @@ EOD;
             redirect('sesion', 'refresh');
         }
     }
-    
+
     public function eliminar_contacto() {
-         if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in')) {
             $correocontac = $this->input->get('correoc');
             $this->cliente_model->borrar_contacto($correocontac);
         } else {

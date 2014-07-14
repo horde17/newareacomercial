@@ -41,6 +41,7 @@ cliente.cli_telefono_cel as cli_celular, cliente.cli_email, proyecto.pro_nombre,
     public function get_proyectos_activos() {
         $this->db->select('id_proyecto, pro_nombre');
         $this->db->from("proyecto");
+        $this->db->where("pro_activo", 'true');
         $query = $this->db->get();
         return $query->result_array();
     }
