@@ -105,7 +105,7 @@ class Admin_model extends CI_Model {
 from proyecto,venta,apartamento
 where venta.id_apartamento=apartamento.id_apartamento 
 and venta.id_proyecto=proyecto.id_proyecto 
-and cast(venta.fecha as text) like '%2013-10%'
+and cast(venta.fecha as text) like '%$año_mes%'
 group by proyecto.pro_nombre
 order by proyecto.pro_nombre");
         return $query->result_array();
@@ -117,7 +117,7 @@ order by proyecto.pro_nombre");
                 from proyecto,venta,apartamento
                 where venta.id_apartamento=apartamento.id_apartamento 
                 and venta.id_proyecto=proyecto.id_proyecto 
-                and cast(venta.fecha as text) like '%2013-10%' and venta.ase_cedula='$asesor'
+                and cast(venta.fecha as text) like '%$año_mes%' and venta.ase_cedula='$asesor'
                 group by proyecto.pro_nombre");
         return $query->result_array();
     }
@@ -176,12 +176,12 @@ group by proyecto.pro_nombre");
 
     public function ventas_totales_proyecto($proyecto, $fecha_creacion) {
         $today = date("Y-m-d");
-        $query = $this->db->query("select count(cli_cedula) as num_total from venta where venta.id_proyecto=$proyecto and venta.fecha between '$fecha_creacion'
+        $query = $this->db->query("select count(cli_cedula) as num_total from venta where venta.id_proyecto=$proyecto and cast(venta.fecha as text) between '$fecha_creacion'
 and '$today'");
         return $query->result_array();
     }
 
-    public function numero_total_apto_poyecto($proyecto) {
+    public function numero_total_apto_proyecto($proyecto) {
         $query = $this->db->query("select pro_num_aptos from proyecto where id_proyecto=$proyecto");
         return $query->result_array();
     }
@@ -219,21 +219,20 @@ and '$today'");
     }
 
     public function ventas_por_asesor($añomes) {
-        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido, count(apartamento.id_apartamento) as aptos_vendidos from venta
+        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido, asesor.ase_foto, count(apartamento.id_apartamento) as aptos_vendidos from venta
 inner join apartamento on apartamento.id_apartamento=venta.id_apartamento
 inner join asesor on asesor.ase_cedula=venta.ase_cedula
-where cast(venta.fecha as text) like '%2013-10%'
-group by asesor.ase_nombre, asesor.ase_apellido");
+where cast(venta.fecha as text) like '%$añomes%'
+group by asesor.ase_nombre, asesor.ase_apellido, asesor.ase_foto");
         return $query->result_array();
     }
 
     public function asesores_sin_venta($añomes) {
-        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido from asesor
-where ase_nombre not in(
-select asesor.ase_nombre from venta 
+        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido, asesor.ase_foto from asesor
+where ase_nombre not in( select asesor.ase_nombre from venta 
 inner join apartamento on apartamento.id_apartamento=venta.id_apartamento
 inner join asesor on asesor.ase_cedula=venta.ase_cedula
-where cast(venta.fecha as text) like '%2013-10%')");
+where cast(venta.fecha as text) like '%$añomes%')");
         return $query->result_array();
     }
     
@@ -274,7 +273,7 @@ from cliente
 inner join apartamento on apartamento.cli_cedula=cliente.cli_cedula
 inner join proyecto on proyecto.id_proyecto=apartamento.id_proyecto
 inner join couta_inicial on couta_inicial.cli_cedula=cliente.cli_cedula
-where (apartamento.apto_estado_venta=1 and cast(couta_inicial.fecha_pago_cuota as text) like '%2013-10%')");
+where (apartamento.apto_estado_venta=1 and cast(couta_inicial.fecha_pago_cuota as text) like '%$año_mes%')");
         return $query->result_array();
     }
     
@@ -286,8 +285,49 @@ from cliente
 inner join apartamento on apartamento.cli_cedula=cliente.cli_cedula
 inner join proyecto on proyecto.id_proyecto=apartamento.id_proyecto
 inner join coutas_pagar on coutas_pagar.cli_cedula=cliente.cli_cedula
-where (apartamento.apto_estado_venta=1 and cast(coutas_pagar.fecha_pago_cuota as text) like '%2013-10%')") ;
+where (apartamento.apto_estado_venta=1 and cast(coutas_pagar.fecha_pago_cuota as text) like '%$param%')") ;
        return $query->result_array();
+    }
+    
+    public function get_ventas_mes_proyecto($proyecto,$año_mes) {
+        $query = $this->db->query("select count(venta.cli_cedula) as ventas_mes  
+from proyecto,venta,apartamento
+where venta.id_apartamento=apartamento.id_apartamento 
+and venta.id_proyecto=proyecto.id_proyecto 
+and cast(venta.fecha as text) like '%$año_mes%'
+and proyecto.id_proyecto=$proyecto group by pro_nombre");
+        return $query->result_array();
+    }
+    
+    public function get_expectativas_mes($proyecto,$año_mes) {
+        $query = $this->db->query("select expectativa_ventas.* from expectativa_ventas
+inner join proyecto on proyecto.id_proyecto=expectativa_ventas.id_proyecto
+where proyecto.id_proyecto=$proyecto and expectativa_ventas.fecha_venta like ('%$año_mes%')");
+        return $query->result_array();
+    }
+    
+    public function num_estados_cliente_proyecto($proyecto,$estado) {
+        $this->db->select('count(apartamento.cli_cedula) as num_cliente');
+        $this->db->from("proyecto");
+        $this->db->join("apartamento", "apartamento.id_proyecto=proyecto.id_proyecto");
+        $this->db->where("proyecto.id_proyecto", $proyecto);
+        $this->db->where("apartamento.apto_estado_venta", $estado);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function clientes_potenciales() {
+        $query = $this->db->query("select case when (presupuesto between 1 and 90000000) then 'Clientes con un presupuesto entre 0 y 90.000.000 millones' else
+case when (presupuesto between 90000001 and 180000000) then 'Clientes con un presupuesto entre 90.000.001 y 180.000.000 Millones' else
+case when (presupuesto > 180000000) then 'Clientes con un presupuesto mayor a 180.000.000'
+END
+END
+END presu,
+count(*) total
+from contactos
+group by presu
+order by presu");
+        return $query->result_array();
     }
 
 

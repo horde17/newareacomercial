@@ -48,5 +48,24 @@ class Asesor_model extends CI_Model {
         $this->db->where("ase_cedula", $cedula);
         $this->db->update("asesor", $data);
     }
+    
+    public function ventas_por_asesor($añomes) {
+        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido, count(apartamento.id_apartamento) as aptos_vendidos from venta
+inner join apartamento on apartamento.id_apartamento=venta.id_apartamento
+inner join asesor on asesor.ase_cedula=venta.ase_cedula
+where cast(venta.fecha as text) like '%2013-10%'
+group by asesor.ase_nombre, asesor.ase_apellido");
+        return $query->result_array();
+    }
+    
+    public function asesores_sin_venta($añomes) {
+        $query = $this->db->query("select asesor.ase_nombre, asesor.ase_apellido from asesor
+where ase_nombre not in(
+select asesor.ase_nombre from venta 
+inner join apartamento on apartamento.id_apartamento=venta.id_apartamento
+inner join asesor on asesor.ase_cedula=venta.ase_cedula
+where cast(venta.fecha as text) like '%2013-10%')");
+        return $query->result_array();
+    }
 }
 

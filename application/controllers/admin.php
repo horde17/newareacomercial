@@ -18,6 +18,56 @@ class Admin extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             $año_mes = date("Y-m");
             $sesiondata = $this->session->userdata('logged_in');
+            $proyectos = array();
+            $proy_activos = $this->cliente_model->get_proyectos_activos();
+            $i = 0;
+            foreach ($proy_activos as $key) {
+                if ($this->admin_model->get_ventas_mes_proyecto($key['id_proyecto'], $año_mes)) {
+                    $ventas_proyecto = $this->admin_model->get_ventas_mes_proyecto($key['id_proyecto'], $año_mes);
+                    $ventas_proyecto = $ventas_proyecto[0]['ventas_mes'];
+                } else {
+                    $ventas_proyecto = 0;
+                }
+
+                if ($this->admin_model->get_expectativas_mes($key['id_proyecto'], $año_mes)) {
+                    $expectativas = $this->admin_model->get_expectativas_mes($key['id_proyecto'], $año_mes);
+                    $expectativas = $expectativas[0]['num_ventas'];
+                } else {
+                    $expectativas = 0;
+                }
+                if ($this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 4)) {
+                    $fichas_tecnicas = $this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 4);
+                    $fichas_tecnicas = $fichas_tecnicas[0]['num_cliente'];
+                } else {
+                    $fichas_tecnicas = 0;
+                }
+                if ($this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 1)) {
+                    $separaciones = $this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 1);
+                    $separaciones = $separaciones[0]['num_cliente'];
+                } else {
+                    $separaciones = 0;
+                }
+                if ($this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 2)) {
+                    $compromiso = $this->admin_model->num_estados_cliente_proyecto($key['id_proyecto'], 2);
+                    $compromiso = $compromiso[0]['num_cliente'];
+                } else {
+                    $compromiso = 0;
+                }
+                $nombre_proyecto = $this->admin_model->get_nom_proyecto($key['id_proyecto']);
+                $fecha_creacion = $this->admin_model->get_fecha_creacion($key['id_proyecto']);
+                $ventas_totales = $this->admin_model->ventas_totales_proyecto($key['id_proyecto'], $fecha_creacion[0]['pro_fecha_creacion']);
+                $num_total_aptos = $this->admin_model->numero_total_apto_proyecto($key['id_proyecto']);
+                $porcentaje_ventas = ($ventas_totales[0]['num_total'] / $num_total_aptos[0]['pro_num_aptos']) * 100;
+
+
+
+                $proyectos[] = array('nom_proyecto' => $nombre_proyecto[0]['pro_nombre'], 'ventas_mes' => $ventas_proyecto,
+                    'expectativas' => $expectativas, 'ventas_hasta_hoy' => $ventas_totales[0]['num_total'], 'porcentaje' => $porcentaje_ventas,
+                    "fichas_tecnicas" => $fichas_tecnicas, "separaciones" => $separaciones, "compromisos" => $compromiso);
+            }
+
+            $clientes_potenciales = $this->admin_model->clientes_potenciales();
+
             $data = array(
                 "main" => 'administrador/admin_index_view',
                 "titulo" => 'Inicio',
@@ -27,6 +77,8 @@ class Admin extends CI_Controller {
                 "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "lugar" => 'Bienvenido',
                 "titulo_page" => "Dashboard",
+                "proyectos_venta" => $proyectos,
+                "clientes_potenciales" => $clientes_potenciales,
                 "subtitulo_page" => "Resumen indicadores Constructora JYP",
                 "box_title" => "Dashboard"
             );
@@ -60,16 +112,33 @@ class Admin extends CI_Controller {
 
     public function crear_nuevo_asesor() {
         if ($this->session->userdata('logged_in')) {
-
-            $nombre = $this->input->get('nombre');
-            $apellido = $this->input->get('apellidos');
-            $cedula = $this->input->get('cedula');
-            $direccion = $this->input->get('direccion');
-            $telefono = $this->input->get('telefono');
-            $contraseña = $this->input->get('password');
-            $this->admin_model->guardar_asesor($nombre, $apellido, $cedula, $direccion, $telefono, $contraseña, "asesor.jpg");
+            $direccionima = "./uploads/asesores/";
+            $fecha = date("Y-m-d");
+            $config['upload_path'] = $direccionima;
+            $config['allowed_types'] = 'gif|jpg|png|xls|xlsx';
+            $config['max_size'] = '10000';
+            $config['file_name'] = 'asesor' . $fecha;
+            $nombre = $_FILES['foto']['name'];
+            $extension = end(explode(".", $nombre));
+            $namefile = "asesor" . $fecha . "." . $extension;
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('foto')) {
+                echo "errores";
+                $error = array('error' => $this->upload->display_errors());
+                print_r($error);
+            } else {
+                $nombre = $this->input->post('nombre');
+                $apellido = $this->input->post('apellidos');
+                $cedula = $this->input->post('cedula');
+                $direccion = $this->input->post('direccion');
+                $telefono = $this->input->post('telefono');
+                $contraseña = $this->input->post('password');
+                $this->admin_model->guardar_asesor($nombre, $apellido, $cedula, $direccion, $telefono, $contraseña, $namefile);
 //                echo "se realizo satisfactoriamente";
-            $this->creacion_exitosa();
+                $this->creacion_exitosa();
+//            echo "no error";
+               
+            }
         } else {
             redirect('sesion', 'refresh');
         }
@@ -478,7 +547,7 @@ class Admin extends CI_Controller {
             $array_nom_meses = array($nombre_mes_actual, $nombre_mes_anterior, $nombre_mes_anterior2);
             $datajson = array();
             $i = 0;
-            $datajson[$i] = array('Meses', 'Numero De Ventas','Expectativas de ventas');
+            $datajson[$i] = array('Meses', 'Numero De Ventas', 'Expectativas de ventas');
             $i+=1;
             $j = 0;
             foreach ($ventas_meses_proyecto as $key) {
@@ -498,7 +567,7 @@ class Admin extends CI_Controller {
             $nombre_proyecto = $this->admin_model->get_nom_proyecto($proyecto);
             $fecha_creacion = $this->admin_model->get_fecha_creacion($proyecto);
             $ventas_totales = $this->admin_model->ventas_totales_proyecto($proyecto, $fecha_creacion[0]['pro_fecha_creacion']);
-            $apto_total = $this->admin_model->numero_total_apto_poyecto($proyecto);
+            $apto_total = $this->admin_model->numero_total_apto_proyecto($proyecto);
             $i = 0;
             $datajson = array();
             $datajson[$i] = array('Nombre Proyecto', 'Numero Total de Ventas al Dia de Hoy', "Numero Total Apartamentos");
@@ -769,7 +838,7 @@ class Admin extends CI_Controller {
             print_r($expectativas);
             $this->admin_model->borrar_expectativas($proyecto);
             echo count($expectativas);
-            foreach( $expectativas  as $key) {
+            foreach ($expectativas as $key) {
                 $data = array(
                     "fecha_venta" => $key->fecha,
                     "num_ventas" => $key->total,
@@ -781,7 +850,7 @@ class Admin extends CI_Controller {
             redirect('sesion', 'refresh');
         }
     }
-    
+
     public function pago_mes_actual() {
         if ($this->session->userdata('logged_in')) {
             $año_mes = date("Y-m");
@@ -792,21 +861,19 @@ class Admin extends CI_Controller {
                 "persona" => $this->admin_model->get_user($sesiondata['username']),
                 "lugar" => 'Pagos del mes actual',
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
-                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes), 
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "pago_cuota_inicial" => $this->admin_model->pago_mes_ini_actual($año_mes),
                 "pago_cuotas" => $this->admin_model->pago_mes_actual($año_mes),
                 "titulo_page" => "Pagos del mes actual",
                 "subtitulo_page" => "Pagos que deben realizar los clientes",
                 "box_title" => "Datos de las separaciones de inmueble",
-                
             );
             $this->load->view('include/admin_template', $data);
         } else {
             redirect('sesion', 'refresh');
         }
-        
     }
-    
+
     public function pago_mes_anterior() {
         if ($this->session->userdata('logged_in')) {
             $año_mes = date("Y-m");
@@ -820,19 +887,17 @@ class Admin extends CI_Controller {
                 "persona" => $this->admin_model->get_user($sesiondata['username']),
                 "lugar" => 'Pagos del mes actual',
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
-                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes), 
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "pago_cuota_inicial" => $this->admin_model->pago_mes_ini_actual($año_mes_anterior),
                 "pago_cuotas" => $this->admin_model->pago_mes_actual($año_mes_anterior),
                 "titulo_page" => "Pagos del mes actual",
                 "subtitulo_page" => "Pagos que deben realizar los clientes",
                 "box_title" => "Datos de las separaciones de inmueble",
-                
             );
             $this->load->view('include/admin_template', $data);
         } else {
             redirect('sesion', 'refresh');
         }
-        
     }
 
 }

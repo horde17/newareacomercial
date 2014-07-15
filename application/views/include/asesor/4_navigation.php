@@ -6,7 +6,7 @@
             <div class="divide-20"></div>
             <!-- SEARCH BAR -->
             <div id="search-bar">
-                <a href="<?php echo base_url() ?>admin/"><img class="img-responsive" src="<?php echo base_url() ?>images/fotojyp.png" alt="Constructora JYP"/></a>
+                <a href="<?php echo base_url() ?>asesor/"><img class="img-responsive" src="<?php echo base_url() ?>images/fotojyp.png" alt="Constructora JYP"/></a>
             </div>
             <!-- /SEARCH BAR -->
 
@@ -56,9 +56,9 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="<?php echo base_url()?>cliente/nuevo_contacto"><span class="sub-menu-text">Nuevos contactos</span></a></li>
-                        <li><a class="" href="<?php echo base_url()?>cliente/subir_contacto"><span class="sub-menu-text">Nuevos  excel</span></a></li>
-                        <li><a class="" href="<?php echo base_url()?>cliente/contactos/"><span class="sub-menu-text">Contactos</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>asesor/nuevo_contacto"><span class="sub-menu-text">Nuevos contactos</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>asesor/subir_contacto"><span class="sub-menu-text">Nuevos  excel</span></a></li>
+                        <li><a class="" href="<?php echo base_url()?>asesor/contactos/"><span class="sub-menu-text">Contactos</span></a></li>
                         
                     </ul>
                 </li>

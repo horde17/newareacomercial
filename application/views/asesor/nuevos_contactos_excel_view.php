@@ -54,13 +54,13 @@
                                     <div class="col-lg-12">
                                         <!-- BOX -->
                                         <div class="col-lg-2">
-                                            <a href="<?php echo base_url() ?>uploads/excel/Ejemplo_Excel.xlsx">
+                                            <a href="<?php echo base_url() ?>uploads/excel/ejemplo_contactos.xlsx">
                                                 <img style="max-height: 100px; max-width: 100px;" id="descargarexcel" title="Descargar excel de ejemplo" src="<?php echo base_url() ?>images/excel.jpg" class="img-responsive" alt="Descargar excel de ejemplo">
                                             </a>
 
                                         </div>
                                         <div class="col-lg-9 center">
-                                            <form action="<?php echo base_url() ?>index.php/cliente/upload_cliente_excel/" method="POST" enctype="multipart/form-data">
+                                            <form action="<?php echo base_url() ?>index.php/cliente/read_excel_contactos/" method="POST" enctype="multipart/form-data">
                                                 <input type="file" name="files" class="filestyle" data-buttonText="Subir clientes">
                                                 <br>
 
@@ -115,3 +115,4 @@
     });
 
 </script>
+

@@ -1728,7 +1728,7 @@ EOD;
 //                $this->load->view('formulario_carga', $error);
         } else {
             $this->read_excel_new_contactos($namefile);
-            $this->index();
+            $this->contactos();
         }
     }
 

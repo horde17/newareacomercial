@@ -79,6 +79,9 @@ if (empty($_SESSION['username'])) {
 	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/media/assets/js/datatables.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
+        <!-- EASY PIE CHART -->
+	<script src="<?php echo base_url() ?>js/jquery-easing/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url() ?>js/easypiechart/jquery.easypiechart.min.js"></script>
     </head>
     <body>
 

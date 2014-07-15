@@ -98,7 +98,7 @@
                     <li class="current">
                         <a href="javascript:void(0);">
                             <span class="image">
-                                <img src="<?php echo base_url() ?>img/avatars/avatar3.jpg" alt="" />
+                                <img src="<?php echo base_url()."uploads/asesores/".$key["ase_foto"]?>" alt="" />
                             </span>
                             <span class="title">
                                 <?php echo $key["ase_nombre"] . " " . $key["ase_apellido"] ?>
@@ -135,11 +135,11 @@
 
                 <?php
                 if ($noventasasesores != "false") {
-                    foreach ($noventasasesores as $key => $value) {
+                    foreach ($noventasasesores as $key) {
                         echo '<li class = "current">';
                         echo '<a href = "javascript:void(0);">';
                         echo '<span class = "image">';
-                        echo '<img src = '. base_url().'img/avatars/avatar3.jpg'. ' alt = "" />';
+                        echo '<img src = '. base_url().'uploads/asesores/'.$key["ase_foto"]. ' alt = "Asesor COnstructora" />';
                         echo '</span>';
                         echo '<span class = "title">';
                         echo $key["ase_nombre"] . " " . $key["ase_apellido"];

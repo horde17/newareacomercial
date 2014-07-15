@@ -33,8 +33,8 @@
             return false;
         }
 
-        if ($('#file_browse').val() == '') {
-            $("#labelfile_browse").append("Se te ha olvidado algo?");
+        if ($('#foto').val() == '') {
+            $("#labelfoto").append("Se te ha olvidado algo?");
             return false;
         }
 
@@ -103,7 +103,7 @@
                                 <!-- TOP ROW -->
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form id="da-login-form"  enctype="multipart/form-data"  onsubmit="return controlformularios();" method="get" action="<?php echo base_url(); ?>admin/crear_nuevo_asesor/">
+                                        <form id="da-login-form"  enctype="multipart/form-data"  onsubmit="return controlformularios();" method="post" action="<?php echo base_url(); ?>index.php/admin/crear_nuevo_asesor/">
 
                                             <label class="labelform" for="nombre">Nombre</label>
                                             <br/>
@@ -134,6 +134,11 @@
                                             <br/>
                                             <input type="tel" class="form-control" name="telefono" id="telefono" onblur="eliminarlabel(this.id);" placeholder="Telefono" />
                                             <label id="labeltelefono"></label>
+                                            <br/>
+                                            <label class="labelform" for="foto">Imagen</label>
+                                            <br/>
+                                            <input type="file" class="filestyle" name="foto" data-buttonText="Subir clientes" id="foto" onblur="eliminarlabel(this.id);"/>
+                                            <label id="labelfoto"></label>
                                                                              
 
 

@@ -1488,6 +1488,7 @@ EOD;
                 "persona" => $this->asesor_model->get_user($sesiondata['username']),
                 "clientes" => $this->cliente_model->get_clientes(),
                 "proyectos" => $this->cliente_model->get_proyectos_activos(),
+                "fotosesion" => $this->asesor_model->get_foto($sesiondata['username']),
                 "lugar" => 'Separación del cliente',
                 "titulo_page" => "Separación del cliente",
                 "subtitulo_page" =>"Separación digital del cliente",
@@ -1544,7 +1545,7 @@ EOD;
     public function actualizar_info_cuenta() {
         if ($this->session->userdata('logged_in')) {
             $sesiondata = $this->session->userdata('logged_in');
-            if ($this->input->post('file_browse') == "") {
+//            if ($this->input->post('file_browse') == "") {
                 $nombre = $this->input->post('nombre');
                 $apellido = $this->input->post('apellidos');
                 $cedula = $this->input->post('cedula');
@@ -1554,34 +1555,34 @@ EOD;
                 $this->asesor_model->actualizar_asesor2($nombre, $apellido, $cedula, $direccion, $telefono, $contraseña);
 //                echo "se realizo satisfactoriamente";
                 $this->index();
-            } else {
-                $direccionima = "./uploads/asesores/";
-
-                $config['upload_path'] = $direccionima;
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size'] = '10000';
-
-
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('file_browse')) {
-                    echo "errores";
-                    $error = array('error' => $this->upload->display_errors());
-                    print_r($error);
-//              
-//                $this->load->view('formulario_carga', $error);
-                } else {
-                    $nombre = $this->input->post('nombre');
-                    $apellido = $this->input->post('apellidos');
-                    $cedula = $this->input->post('cedula');
-                    $direccion = $this->input->post('direccion');
-                    $telefono = $this->input->post('telefono');
-                    $contraseña = $this->input->post('password');
-                    $this->asesor_model->actualizar_asesor($nombre, $apellido, $cedula, $direccion, $telefono, $contraseña, str_replace(" ", "_", $_FILES['file_browse']['name']));
-//                echo "se realizo satisfactoriamente";
-                    $this->index();
-                }
-            }
+//            } else {
+//                $direccionima = "./uploads/asesores/";
+//
+//                $config['upload_path'] = $direccionima;
+//                $config['allowed_types'] = 'gif|jpg|png';
+//                $config['max_size'] = '10000';
+//
+//
+//                $this->load->library('upload', $config);
+//
+//                if (!$this->upload->do_upload('file_browse')) {
+//                    echo "errores";
+//                    $error = array('error' => $this->upload->display_errors());
+//                    print_r($error);
+////              
+////                $this->load->view('formulario_carga', $error);
+//                } else {
+//                    $nombre = $this->input->post('nombre');
+//                    $apellido = $this->input->post('apellidos');
+//                    $cedula = $this->input->post('cedula');
+//                    $direccion = $this->input->post('direccion');
+//                    $telefono = $this->input->post('telefono');
+//                    $contraseña = $this->input->post('password');
+//                    $this->asesor_model->actualizar_asesor($nombre, $apellido, $cedula, $direccion, $telefono, $contraseña, str_replace(" ", "_", $_FILES['file_browse']['name']));
+////                echo "se realizo satisfactoriamente";
+//                    $this->index();
+//                }
+//            }
         } else {
             redirect('sesion', 'refresh');
         }
@@ -1597,6 +1598,7 @@ EOD;
                 "persona" => $this->admin_model->get_user($sesiondata['username']),
                 "clientes" => $this->cliente_model->get_clientes(),
                 "proyectos" => $this->cliente_model->get_proyectos_activos(),
+                "fotosesion" => $this->asesor_model->get_foto($sesiondata['username']),
                 "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
                 "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
                 "lugar" => 'Nuevos clientes',
@@ -1604,7 +1606,7 @@ EOD;
                 "subtitulo_page" =>"Nuevos clientes desde archivo excel",
                 "box_title" => "Subir archivo excel"
             );
-            $this->load->view('include/cliente_template', $data);
+            $this->load->view('include/asesor_template', $data);
         } else {
             redirect('sesion', 'refresh');
         }
@@ -1693,6 +1695,150 @@ EOD;
                     $this->cliente_model->insertar_conyuge($insertar_conyuge);
                 }
             }
+        }
+    }
+    
+    public function nuevo_contacto() {
+        if ($this->session->userdata('logged_in')) {
+            $año_mes = date("Y-m");
+            $sesiondata = $this->session->userdata('logged_in');
+            $data = array(
+                "main" => 'clientes/nuevos_contactos_view',
+                "titulo" => 'Nuevos contactos',
+                "persona" => $this->cliente_model->get_user($sesiondata['username']),
+                "proyectos" => $this->cliente_model->get_proyectos_activos(),
+                "fotosesion" => $this->asesor_model->get_foto($sesiondata['username']),
+                "ventasasesores" => $this->asesor_model->ventas_por_asesor($año_mes),
+                "noventasasesores" => $this->asesor_model->asesores_sin_venta($año_mes),
+                "lugar" => 'Nuevos contactos',
+                "titulo_page" => "Nuevos contactos",
+                "subtitulo_page" => "Nuevos contactos",
+                "box_title" => "Nuevo contacto"
+            );
+            $this->load->view('include/asesor_template', $data);
+        } else {
+            redirect('sesion', 'refresh');
+        }
+    }
+
+    public function new_form_contacto() {
+        if ($this->session->userdata('logged_in')) {
+            $nombre = $this->input->post('nombre');
+            $telfijo = $this->input->post('telefijo');
+            $telefonocel = $this->input->post('telefonocel');
+            $correo = $this->input->post('correo');
+            $presupuesto = $this->input->post('presupuesto');
+            $proyectos = $this->input->post('proyectos');
+//            echo $proyectos;
+            $presupuesto = str_replace(".", "", $presupuesto);
+
+
+            $data = array(
+                "nombre" => $nombre,
+                "telefono_fijo" => $telfijo,
+                "telefono_cel" => $telefonocel,
+                "correo" => $correo,
+                "presupuesto" => (double) $presupuesto,
+                "pro_nombre" => $proyectos
+            );
+            $this->cliente_model->insertar_contactos($data);
+            redirect('cliente/nuevo_contacto/', 'refresh');
+        } else {
+            redirect('sesion', 'refresh');
+        }
+    }
+
+    public function read_excel_contactos() {
+        $direccionima = "./uploads/";
+        $fecha = date("Y-m-d");
+        $config['upload_path'] = $direccionima;
+        $config['allowed_types'] = 'gif|jpg|png|xls|xlsx';
+        $config['max_size'] = '10000';
+        $config['file_name'] = 'excel_contactos' . $fecha;
+        $nombre = $_FILES['files']['name'];
+        $extension = end(explode(".", $nombre));
+
+        $namefile = "excel_contactos" . $fecha . "." . $extension;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('files')) {
+            echo "errores";
+            $error = array('error' => $this->upload->display_errors());
+            print_r($error);
+//            $this->index();
+//              
+//                $this->load->view('formulario_carga', $error);
+        } else {
+            $this->read_excel_new_contactos($namefile);
+            $this->contactos();
+        }
+    }
+
+    public function read_excel_new_contactos($nombre) {
+
+        $direccion = "./uploads/" . $nombre;
+        $this->load->library('excel');
+//        $excel = new Excel();
+        $excel2 = new PHPExcel_IOFactory();
+        $tipoarchivo = $excel2->identify($direccion);
+        $objreader = $excel2->createReader($tipoarchivo);
+        $objphpexcel = $objreader->load($direccion);
+
+        $sheet = $objphpexcel->getSheet(0);
+        $highestRow = $sheet->getHighestRow();
+        $highestColumn = $sheet->getHighestColumn();
+        for ($row = 2; $row <= $highestRow; $row++) {
+
+            //  Read a row of data into an array
+            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+            if ($rowData[0][0] == NULL) {
+                break;
+            } else {
+                $presupuesto = str_replace(".", "", (string) $rowData[0][4]);
+                $data = array(
+                    "nombre" => $rowData[0][0],
+                    "telefono_fijo" => $rowData[0][1],
+                    "telefono_cel" => $rowData[0][2],
+                    "correo" => $rowData[0][3],
+                    "presupuesto" => (double) $presupuesto,
+                    "pro_nombre" => $rowData[0][5]
+                );
+                $this->cliente_model->insertar_contactos($data);
+            }
+        }
+    }
+
+    public function contactos() {
+        if ($this->session->userdata('logged_in')) {
+            $año_mes = date("Y-m");
+            $sesiondata = $this->session->userdata('logged_in');
+            $data = array(
+                "main" => 'clientes/contactos_view',
+                "titulo" => 'Contactos potenciales',
+                "persona" => $this->admin_model->get_user($sesiondata['username']),
+                "contactos" => $this->cliente_model->get_contactos(),
+                "fotosesion" => $this->asesor_model->get_foto($sesiondata['username']),
+                "proyectos" => $this->cliente_model->get_proyectos_activos(),
+                "ventasasesores" => $this->admin_model->ventas_por_asesor($año_mes),
+                "noventasasesores" => $this->admin_model->asesores_sin_venta($año_mes),
+                "lugar" => 'Contactos potenciales',
+                "titulo_page" => "Contactos potenciales",
+                "subtitulo_page" => "Contactos potenciales",
+                "box_title" => "Contactos"
+            );
+            $this->load->view('include/asesor_template', $data);
+        } else {
+            redirect('sesion', 'refresh');
+        }
+    }
+
+    public function eliminar_contacto() {
+        if ($this->session->userdata('logged_in')) {
+            $correocontac = $this->input->get('correoc');
+            $this->cliente_model->borrar_contacto($correocontac);
+        } else {
+            redirect('sesion', 'refresh');
         }
     }
 

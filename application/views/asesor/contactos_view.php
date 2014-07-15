@@ -1,3 +1,24 @@
+<script type="text/javascript">
+
+
+    function borrar_asesor(correo) {
+        var confirmar = confirm("Desea Eliminar contacto ");
+        if (confirmar) {
+            var parametro = {'correoc': correo};
+            $.ajax({
+                url: "<?php echo base_url() ?>index.php/cliente/eliminar_contacto/",
+                data: parametro,
+                async: false
+            });
+            location.href = "<?php echo base_url() ?>cliente/contactos/";
+        }
+
+    }
+
+
+
+</script>
+
 <div id="main-content">
     <div class="container">
         <div class="row">
@@ -59,16 +80,11 @@
                                             <table id="datatable2" cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered table-hover">
                                                 
                                                     <thead>
-                                                        <tr>
-                                                            <th>
-                                                                Cedula
-                                                            </th>
+                                                        <tr>                                                            
                                                             <th>
                                                                 Nombre
                                                             </th>
-                                                            <th>
-                                                                Apellido
-                                                            </th>
+                                                            
                                                             <th>
                                                                 Telefono
                                                             </th>
@@ -79,55 +95,58 @@
                                                                 Email
                                                             </th>
                                                             <th>
-                                                                Dirección
+                                                                Presupuesto
                                                             </th>
+                                                            
                                                             <th>
                                                                 Proyecto intéres
+                                                            </th>
+                                                            <th>
+                                                                Acciones
                                                             </th>
 
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($clientes as $key) { ?>
+                                                        <?php foreach ($contactos as $key) { ?>
                                                             <tr>
                                                                 <td class="gradeX">
-                                                                    <strong><?php echo $key['cli_cedula']; ?></strong>
+                                                                    <strong><?php echo $key['nombre']; ?></strong>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_nombre']); ?>
+                                                                    <?php echo utf8_decode($key['telefono_fijo']); ?>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_apellido']); ?>
+                                                                    <?php echo utf8_decode($key['telefono_cel']); ?>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_telefono_cel']); ?>
+                                                                    <?php echo utf8_decode($key['correo']); ?>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_telefono']); ?>
+                                                                    <?php echo utf8_decode($key['presupuesto']); ?>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_email']); ?>
+                                                                    <?php echo utf8_decode($key['pro_nombre']); ?>
                                                                 </td>
                                                                 <td class="gradeX">
-                                                                    <?php echo utf8_decode($key['cli_direccion']); ?> 
+                                                                    <button id="eliminar"  onclick="borrar_asesor('<?php echo $key['correo'] ?>')"><img   src="<?php echo base_url() ?>images/delete.png" width="25px" height="25px;" alt="Eliminar Asesor" /></button>                                                        
                                                                 </td>
-                                                                <td class="gradeX">
-                                                                    <?php echo ($key['pro_nombre']); ?> 
-                                                                </td>
+                                                                
+                                                                
 
                                                             </tr>
                                                         <?php } ?> 
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>Cedula</th>
-                                                            <th>Nombre</th>
-                                                            <th>Apellido</th>
+                                                            
+                                                            <th>Nombre</th>                                                            
                                                             <th>Telefono</th>
                                                             <th>Celular</th>
                                                             <th>Email</th>
-                                                            <th>Dirección</th>
+                                                            <th>Presupuesto</th>
                                                             <th>Proyecto intéres</th>
+                                                            <th>Acciones</th>
                                                         </tr>
                                                     </tfoot>
                                                 </table>

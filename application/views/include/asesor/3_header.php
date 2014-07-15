@@ -70,8 +70,8 @@
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user" style="float: right;" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img alt="" src="<?php echo base_url()?>uploads/asesores/administrador.jpg" />
-                    <span class="username">Director Comercial</span>
+                    <img alt="" src="<?php echo base_url()?>uploads/asesores/<?php echo $fotosesion[0]['ase_foto']?>" />
+                    <span class="username">Asesor Comercial</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
